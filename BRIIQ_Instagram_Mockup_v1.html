@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRIIQ — Instagram Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#F0F0F0;
+  font-family:'Syne','Noto Sans KR',sans-serif;
+  display:flex; flex-direction:column; align-items:center;
+  padding:32px 16px 80px; gap:32px;
+}
+
+/* PAGE HEADER */
+.pg-hdr { text-align:center; }
+.pg-eye { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.25em; color:#1A5CFF; text-transform:uppercase; margin-bottom:8px; }
+.pg-title { font-size:22px; font-weight:800; letter-spacing:-0.02em; color:#111; }
+
+/* TOGGLE */
+.toggle {
+  display:flex; gap:4px;
+}
+.tgl {
+  font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.15em;
+  text-transform:uppercase; padding:8px 20px;
+  border:1px solid #DDD; background:#fff; color:#999;
+  cursor:pointer; transition:all 0.15s; border-radius:0;
+}
+.tgl.on { background:#111; color:#fff; border-color:#111; }
+
+/* PHONE SHELL */
+.phone-shell {
+  width:375px;
+  background:#fff;
+  border-radius:44px;
+  overflow:hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.2), 0 0 0 8px #1A1A1A, 0 0 0 9px #333;
+  position:relative;
+  flex-shrink:0;
+}
+
+/* STATUS BAR */
+.statusbar {
+  background:#fff;
+  padding:14px 24px 8px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.sb-time { font-size:15px; font-weight:700; color:#000; letter-spacing:-0.01em; }
+.sb-icons { display:flex; align-items:center; gap:6px; }
+.sb-icon { font-size:12px; color:#000; }
+
+/* IG HEADER */
+.ig-header {
+  background:#fff;
+  border-bottom:1px solid #DBDBDB;
+  padding:8px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.igh-left { display:flex; align-items:center; gap:12px; }
+.igh-back { font-size:22px; color:#000; }
+.igh-info { display:flex; flex-direction:column; }
+.igh-title { font-size:16px; font-weight:700; color:#000; letter-spacing:-0.01em; }
+.igh-handle { font-size:12px; color:#737373; }
+.igh-follow {
+  background:#1A5CFF; color:#fff;
+  font-size:13px; font-weight:600;
+  padding:6px 16px; border-radius:8px;
+  border:none;
+}
+
+/* ─── VIEW CONTAINERS ─── */
+.view { display:none; }
+.view.active { display:block; }
+
+/* ============================================
+   VIEW 1: PROFILE + FEED
+============================================ */
+.profile-section {
+  background:#fff;
+  padding:16px;
+}
+.prof-top {
+  display:flex; align-items:center; gap:16px; margin-bottom:16px;
+}
+.prof-avatar {
+  width:80px; height:80px; border-radius:50%;
+  background:linear-gradient(135deg, #1A5CFF, #0d3299);
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:800; color:#fff;
+  font-family:'DM Mono',monospace; flex-shrink:0;
+  border:2px solid #fff;
+  box-shadow:0 0 0 2px #1A5CFF;
+}
+.prof-stats { display:flex; gap:0; flex:1; }
+.prof-stat { flex:1; text-align:center; }
+.ps-num { font-size:16px; font-weight:700; color:#000; display:block; }
+.ps-label { font-size:12px; color:#737373; }
+
+.prof-name { font-size:14px; font-weight:700; color:#000; margin-bottom:2px; }
+.prof-bio { font-size:13px; color:#000; line-height:1.5; margin-bottom:12px; }
+.prof-bio em { font-style:normal; color:#1A5CFF; }
+
+.prof-btns { display:flex; gap:8px; margin-bottom:16px; }
+.pb-follow {
+  flex:1; background:#1A5CFF; color:#fff;
+  font-size:14px; font-weight:600;
+  padding:8px; border-radius:8px; border:none; text-align:center;
+}
+.pb-msg {
+  flex:1; background:#EFEFEF; color:#000;
+  font-size:14px; font-weight:600;
+  padding:8px; border-radius:8px; border:none; text-align:center;
+}
+
+/* FEED GRID */
+.feed-tabs {
+  display:flex; border-top:1px solid #DBDBDB;
+  background:#fff;
+}
+.feed-tab {
+  flex:1; text-align:center; padding:12px;
+  border-top:2px solid transparent; font-size:18px;
+}
+.feed-tab.on { border-top-color:#000; }
+
+.feed-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:2px; background:#DBDBDB;
+}
+.feed-item {
+  aspect-ratio:1; position:relative; overflow:hidden;
+  cursor:pointer;
+}
+.feed-item svg { width:100%; height:100%; display:block; }
+.feed-badge {
+  position:absolute; top:4px; left:4px;
+  font-family:'DM Mono',monospace; font-size:6px; letter-spacing:0.1em;
+  color:#fff; text-transform:uppercase;
+  padding:2px 5px; border-radius:2px;
+}
+.b-news { background:#1A5CFF; }
+.b-crypto { background:#7C3AED; }
+.feed-txt {
+  position:absolute; bottom:5px; left:5px; right:5px;
+  font-size:9px; font-weight:900; color:#fff;
+  font-family:'Noto Sans KR',sans-serif; line-height:1.2;
+  text-shadow:0 1px 4px rgba(0,0,0,0.6);
+}
+.feed-logo {
+  position:absolute; top:4px; right:4px;
+  font-family:'DM Mono',monospace; font-size:5px;
+  color:rgba(255,255,255,0.6); letter-spacing:0.08em;
+}
+.feed-video-icon {
+  position:absolute; top:4px; right:4px;
+  color:rgba(255,255,255,0.9); font-size:10px;
+}
+
+/* ============================================
+   VIEW 2: REEL — 카드뉴스
+============================================ */
+.reel-wrap {
+  position:relative; background:#000;
+}
+.reel-content {
+  width:100%; aspect-ratio:9/16;
+  position:relative; overflow:hidden;
+}
+
+/* 카드뉴스 배경 SVG */
+.reel-bg { width:100%; height:100%; position:absolute; inset:0; }
+
+/* 카드뉴스 텍스트 레이어 */
+.reel-overlay {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:20px 18px;
+  background:linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.9) 75%, #000 90%);
+}
+.ro-logo-badge {
+  position:absolute; top:16px; left:16px;
+  font-family:'DM Mono',monospace; font-size:9px;
+  color:#fff; background:#1A5CFF; padding:3px 9px;
+  letter-spacing:0.12em;
+}
+.ro-date { font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:0.12em; margin-bottom:6px; text-transform:uppercase; }
+.ro-title { font-size:20px; font-weight:900; color:#fff; line-height:1.2; letter-spacing:-0.02em; font-family:'Noto Sans KR',sans-serif; margin-bottom:10px; }
+.ro-title em { font-style:normal; color:#4D7FFF; }
+.ro-tag {
+  display:inline-block; font-family:'DM Mono',monospace; font-size:8px;
+  letter-spacing:0.12em; color:rgba(255,255,255,0.6);
+  border:1px solid rgba(255,255,255,0.2); padding:3px 10px;
+  text-transform:uppercase; margin-bottom:10px; border-radius:20px;
+}
+.ro-body { font-size:11px; color:rgba(255,255,255,0.6); line-height:1.65; font-family:'Noto Sans KR',sans-serif; }
+.ro-source { font-family:'DM Mono',monospace; font-size:8px; color:#4D7FFF; margin-top:6px; }
+
+/* IG 릴스 UI 오버레이 */
+.reel-ui {
+  position:absolute; inset:0; pointer-events:none;
+}
+.rui-right {
+  position:absolute; right:12px; bottom:80px;
+  display:flex; flex-direction:column; align-items:center; gap:20px;
+}
+.rui-action { display:flex; flex-direction:column; align-items:center; gap:3px; }
+.rui-icon { font-size:22px; color:#fff; filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+.rui-count { font-size:11px; color:#fff; font-weight:600; }
+.rui-bottom {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:12px 16px 20px;
+  background:linear-gradient(transparent, rgba(0,0,0,0.6));
+}
+.rui-userrow { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.rui-avatar {
+  width:32px; height:32px; border-radius:50%;
+  background:linear-gradient(135deg,#1A5CFF,#0d3299);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:800; color:#fff;
+  border:2px solid #fff; flex-shrink:0;
+}
+.rui-name { font-size:13px; font-weight:700; color:#fff; }
+.rui-follow-sm {
+  font-size:12px; font-weight:600; color:#fff;
+  border:1px solid #fff; padding:2px 10px; border-radius:6px; margin-left:6px;
+}
+.rui-caption { font-size:12px; color:#fff; line-height:1.4; font-family:'Noto Sans KR',sans-serif; }
+.rui-music { display:flex; align-items:center; gap:6px; margin-top:6px; }
+.rui-music-icon { font-size:12px; color:#fff; }
+.rui-music-txt { font-size:11px; color:#fff; opacity:0.8; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.05em; }
+
+/* progress bar */
+.reel-progress {
+  position:absolute; bottom:0; left:0; right:0; height:2px; background:rgba(255,255,255,0.2);
+}
+.reel-progress-fill { height:100%; width:35%; background:#fff; }
+
+/* IG bottom bar */
+.ig-bottombar {
+  background:#fff; border-top:1px solid #DBDBDB;
+  padding:10px 0 20px;
+  display:flex; justify-content:space-around; align-items:center;
+}
+.ibb-icon { font-size:22px; color:#000; text-align:center; }
+.ibb-icon.active { border-bottom:2px solid #000; }
+
+/* ============================================
+   VIEW 3: REEL — 클립+해석
+============================================ */
+.clip-reel {
+  width:100%; aspect-ratio:9/16;
+  background:#000; position:relative; overflow:hidden;
+}
+.cr-top {
+  position:absolute; top:0; left:0; right:0;
+  padding:20px 16px 12px; z-index:10;
+  background:linear-gradient(#000 60%, transparent);
+}
+.cr-userrow { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.cr-avatar {
+  width:28px; height:28px; border-radius:50%;
+  background:#1A5CFF; display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:800; color:#fff;
+}
+.cr-name { font-size:12px; color:rgba(255,255,255,0.7); font-family:'DM Mono',monospace; letter-spacing:0.08em; }
+.cr-headline { font-size:19px; font-weight:900; color:#fff; line-height:1.2; letter-spacing:-0.02em; font-family:'Noto Sans KR',sans-serif; }
+
+/* 클립 영역 (중간) */
+.cr-clip {
+  position:absolute; left:0; right:0;
+  top:110px; bottom:100px; overflow:hidden;
+}
+.cr-clip svg { width:100%; height:100%; }
+.cr-newsbar {
+  position:absolute; bottom:0; left:0; right:0;
+  background:#CC0000; padding:7px 12px;
+  display:flex; align-items:center; gap:8px;
+}
+.cr-nb-breaking {
+  font-family:'DM Mono',monospace; font-size:7px; font-weight:700;
+  color:#fff; background:rgba(0,0,0,0.4); padding:2px 6px; letter-spacing:0.1em;
+  text-transform:uppercase; white-space:nowrap;
+}
+.cr-nb-text { font-family:'DM Mono',monospace; font-size:8px; color:#fff; letter-spacing:0.04em; white-space:nowrap; overflow:hidden; }
+.cr-source {
+  position:absolute; top:8px; right:10px;
+  font-family:'DM Mono',monospace; font-size:7px; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase;
+}
+
+/* 하단 해석 */
+.cr-bottom {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(0,0,0,0.95);
+  border-top:1px solid rgba(26,92,255,0.2);
+  padding:10px 16px 14px;
+}
+.cr-insight { font-size:11px; color:#888; line-height:1.6; font-family:'Noto Sans KR',sans-serif; }
+.cr-insight em { font-style:normal; color:#4D7FFF; }
+
+/* ============================================
+   VIEW 4: REEL — 발언 인용 (Light)
+============================================ */
+.quote-reel {
+  width:100%; aspect-ratio:9/16;
+  background:#fff; position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.qr-top {
+  padding:20px 16px 12px;
+  display:flex; align-items:center; justify-content:center;
+  border-bottom:1px solid #F0F0F0;
+}
+.qr-brand { font-family:'DM Mono',monospace; font-size:14px; font-weight:700; color:#111; letter-spacing:0.08em; }
+.qr-title-area { padding:16px; text-align:center; }
+.qr-title { font-size:22px; font-weight:900; color:#111; line-height:1.2; letter-spacing:-0.02em; font-family:'Noto Sans KR',sans-serif; }
+.qr-clip { flex:1; position:relative; overflow:hidden; background:#E8EBF5; display:flex; align-items:center; justify-content:center; }
+.qr-clip svg { width:100%; height:100%; }
+.qr-caption {
+  position:absolute; bottom:14px; left:14px; right:14px;
+  background:rgba(255,255,255,0.92); border:1px solid #E0E0E0;
+  padding:8px 12px; border-radius:6px;
+}
+.qr-cap-name { font-size:10px; font-weight:700; color:#111; font-family:'Noto Sans KR',sans-serif; margin-bottom:4px; }
+.qr-cap-quote { font-size:10px; color:#444; font-family:'Noto Sans KR',sans-serif; line-height:1.5; }
+.qr-bottom {
+  background:#F8F8F8; border-top:1px solid #E8E8E8;
+  padding:10px 16px 14px;
+}
+.qr-label { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.2em; color:#1A5CFF; text-transform:uppercase; margin-bottom:5px; }
+.qr-insight { font-size:11px; color:#666; line-height:1.55; font-family:'Noto Sans KR',sans-serif; }
+.qr-insight em { font-style:normal; color:#1A5CFF; font-weight:600; }
+.qr-handle { font-family:'DM Mono',monospace; font-size:9px; color:#BBB; margin-top:6px; }
+
+/* IG ACTIONS BAR (릴스용) */
+.ig-actions {
+  background:#fff; padding:10px 16px 6px;
+  border-bottom:1px solid #F0F0F0;
+}
+.ia-row1 { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.ia-left { display:flex; align-items:center; gap:16px; }
+.ia-icon { font-size:22px; color:#000; }
+.ia-likes { font-size:13px; font-weight:600; color:#000; font-family:'Noto Sans KR',sans-serif; }
+.ia-username { font-size:13px; font-weight:700; color:#000; font-family:'Noto Sans KR',sans-serif; }
+.ia-caption { font-size:13px; color:#000; font-family:'Noto Sans KR',sans-serif; line-height:1.45; }
+.ia-more { color:#737373; }
+.ia-comment { font-size:13px; color:#737373; margin-top:4px; font-family:'Noto Sans KR',sans-serif; }
+.ia-time { font-family:'DM Mono',monospace; font-size:10px; color:#C7C7C7; margin-top:4px; letter-spacing:0.05em; }
+
+/* comment input */
+.ig-comment-input {
+  background:#fff; padding:10px 16px;
+  display:flex; align-items:center; gap:10px;
+}
+.ici-avatar {
+  width:28px; height:28px; border-radius:50%;
+  background:#E0E0E0; flex-shrink:0;
+}
+.ici-input {
+  flex:1; background:#F0F0F0; border-radius:20px;
+  padding:8px 14px; font-size:13px; color:#737373;
+  font-family:'Noto Sans KR',sans-serif;
+}
+
+</style>
+</head>
+<body>
+
+<div class="pg-hdr">
+  <div class="pg-eye">BRIIQ · Instagram Mockup</div>
+  <div class="pg-title">실제 인스타그램 적용 모습</div>
+</div>
+
+<div class="toggle">
+  <button class="tgl on" onclick="show(0,this)">프로필·피드</button>
+  <button class="tgl" onclick="show(1,this)">①카드뉴스</button>
+  <button class="tgl" onclick="show(2,this)">②클립+해석</button>
+  <button class="tgl" onclick="show(3,this)">③발언인용</button>
+</div>
+
+<!-- ═══════════════════════════════════
+     VIEW 0: PROFILE + FEED
+═══════════════════════════════════ -->
+<div class="phone-shell view active" id="v0">
+  <!-- status -->
+  <div class="statusbar">
+    <span class="sb-time">9:41</span>
+    <div class="sb-icons">
+      <span class="sb-icon">●●●</span>
+      <span class="sb-icon">WiFi</span>
+      <span class="sb-icon">🔋</span>
+    </div>
+  </div>
+  <!-- ig header -->
+  <div class="ig-header">
+    <div class="igh-left">
+      <div class="igh-back">‹</div>
+      <div class="igh-info">
+        <div class="igh-title">briiq</div>
+      </div>
+    </div>
+    <button class="igh-follow">팔로우</button>
+  </div>
+  <!-- profile -->
+  <div class="profile-section">
+    <div class="prof-top">
+      <div class="prof-avatar">B</div>
+      <div class="prof-stats">
+        <div class="prof-stat"><span class="ps-num">24</span><span class="ps-label">게시물</span></div>
+        <div class="prof-stat"><span class="ps-num">1,284</span><span class="ps-label">팔로워</span></div>
+        <div class="prof-stat"><span class="ps-num">3</span><span class="ps-label">팔로우</span></div>
+      </div>
+    </div>
+    <div class="prof-name">BRIIQ · 브리크</div>
+    <div class="prof-bio">코인·주식 이슈, 왜 움직이는지 해석합니다 📊<br><em>기관·ETF·매크로 흐름 해석</em><br>매일 날카로운 인사이트 ⚡</div>
+    <div class="prof-btns">
+      <div class="pb-follow">팔로우</div>
+      <div class="pb-msg">메시지</div>
+    </div>
+  </div>
+  <!-- tabs -->
+  <div class="feed-tabs">
+    <div class="feed-tab on">⊞</div>
+    <div class="feed-tab">▷</div>
+    <div class="feed-tab">⊙</div>
+  </div>
+  <!-- feed grid -->
+  <div class="feed-grid">
+
+    <!-- 1 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d1828"/><stop offset="100%" stop-color="#1a2d4a"/></linearGradient></defs><rect width="124" height="124" fill="url(#g1)"/><text x="62" y="45" text-anchor="middle" font-size="28" font-weight="900" fill="#1A5CFF" font-family="Arial">70%</text><text x="62" y="62" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Arial">나스닥 상승</text><text x="62" y="74" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Arial">Magnificent 7</text><line x1="20" y1="90" x2="104" y2="90" stroke="#1A5CFF" stroke-width="0.5" opacity="0.3"/><text x="20" y="108" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Arial">BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1020"/><stop offset="100%" stop-color="#2a1535"/></linearGradient></defs><rect width="124" height="124" fill="url(#g2)"/><circle cx="62" cy="42" r="22" fill="#1e1530" stroke="#7C3AED" stroke-width="0.5"/><ellipse cx="62" cy="85" rx="30" ry="18" fill="#1e1530"/><text x="62" y="47" text-anchor="middle" font-size="10" fill="#E0D0FF" font-family="Arial">BTC</text><text x="62" y="108" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Arial">BRIIQ</text></svg>
+      <div class="feed-badge b-crypto">CRYPTO</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#101820"/><stop offset="100%" stop-color="#182535"/></linearGradient></defs><rect width="124" height="124" fill="url(#g3)"/><polyline points="10,90 30,70 50,75 70,50 90,55 114,30" fill="none" stroke="#1A5CFF" stroke-width="1.5"/><polyline points="10,100 30,95 50,92 70,80 90,82 114,65" fill="none" stroke="#4D7FFF" stroke-width="0.8" opacity="0.5"/><text x="10" y="115" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Arial">KOSPI · BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d1520"/><stop offset="100%" stop-color="#101a2a"/></linearGradient></defs><rect width="124" height="124" fill="url(#g4)"/><circle cx="62" cy="40" r="20" fill="#162030"/><rect x="32" y="60" width="60" height="40" rx="4" fill="#162030"/><text x="62" y="45" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.4)" font-family="Arial">JH</text><rect x="14" y="106" width="50" height="3" rx="1" fill="#1A5CFF" opacity="0.6"/><text x="14" y="118" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Arial">젠슨 황 · BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+      <div class="feed-video-icon">▶</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g5" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#0d1520"/><stop offset="100%" stop-color="#1a2035"/></linearGradient></defs><rect width="124" height="124" fill="url(#g5)"/><text x="62" y="40" text-anchor="middle" font-size="22" font-weight="900" fill="rgba(255,255,255,0.9)" font-family="Arial">$62.3B</text><text x="62" y="56" text-anchor="middle" font-size="8" fill="#4D7FFF" font-family="Arial">NVIDIA Q4 Revenue</text><line x1="20" y1="68" x2="104" y2="68" stroke="#1A5CFF" stroke-width="0.5" opacity="0.3"/><text x="62" y="84" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Arial">예상치 상회</text><text x="10" y="118" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Arial">BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+    </div>
+
+    <!-- 6 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#151020"/><stop offset="100%" stop-color="#201530"/></linearGradient></defs><rect width="124" height="124" fill="url(#g6)"/><circle cx="62" cy="42" r="22" fill="#1e1530"/><ellipse cx="62" cy="85" rx="30" ry="18" fill="#1e1530"/><text x="62" y="47" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)" font-family="Arial">CM</text><text x="62" y="110" text-anchor="middle" font-size="7" fill="#7C3AED" font-family="Arial">찰리 멍거</text></svg>
+      <div class="feed-badge b-crypto">CRYPTO</div>
+      <div class="feed-video-icon">▶</div>
+    </div>
+
+    <!-- 7 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#101818"/><stop offset="100%" stop-color="#152025"/></linearGradient></defs><rect width="124" height="124" fill="url(#g7)"/><rect x="20" y="30" width="12" height="60" rx="2" fill="#1A5CFF"/><rect x="40" y="50" width="12" height="40" rx="2" fill="#4D7FFF"/><rect x="60" y="40" width="12" height="50" rx="2" fill="#1A5CFF"/><rect x="80" y="60" width="12" height="30" rx="2" fill="#4D7FFF" opacity="0.7"/><rect x="100" y="35" width="12" height="55" rx="2" fill="#1A5CFF"/><text x="10" y="108" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Arial">ETF 자금 흐름</text></svg>
+      <div class="feed-badge b-crypto">CRYPTO</div>
+    </div>
+
+    <!-- 8 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g8" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1018"/><stop offset="100%" stop-color="#251522"/></linearGradient></defs><rect width="124" height="124" fill="url(#g8)"/><text x="62" y="45" text-anchor="middle" font-size="26" font-weight="900" fill="#FF4444" font-family="Arial">-40%</text><text x="62" y="62" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Arial">서울 전세 매물</text><text x="62" y="75" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Arial">1년 새 감소</text><text x="10" y="118" font-size="7" fill="rgba(255,255,255,0.3)" font-family="Arial">BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+    </div>
+
+    <!-- 9 -->
+    <div class="feed-item">
+      <svg viewBox="0 0 124 124"><defs><linearGradient id="g9" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d1015"/><stop offset="100%" stop-color="#121820"/></linearGradient></defs><rect width="124" height="124" fill="url(#g9)"/><circle cx="62" cy="55" r="28" fill="none" stroke="#1A5CFF" stroke-width="1" opacity="0.4"/><circle cx="62" cy="55" r="18" fill="none" stroke="#1A5CFF" stroke-width="1.5" opacity="0.6"/><circle cx="62" cy="55" r="8" fill="#1A5CFF"/><text x="62" y="100" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Arial">시장 레이더 · BRIIQ</text></svg>
+      <div class="feed-badge b-news">NEWS</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     VIEW 1: 카드뉴스 릴스
+═══════════════════════════════════ -->
+<div class="phone-shell view" id="v1">
+  <div class="statusbar" style="background:#000"><span class="sb-time" style="color:#fff">9:41</span><div class="sb-icons"><span class="sb-icon" style="color:#fff">●●●</span></div></div>
+  <div class="reel-wrap">
+    <div class="reel-content">
+      <!-- 배경 이미지 (도시 야경 스타일) -->
+      <svg class="reel-bg" viewBox="0 0 375 667" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#050d1a"/>
+            <stop offset="60%" stop-color="#091525"/>
+            <stop offset="100%" stop-color="#0d1a30"/>
+          </linearGradient>
+          <linearGradient id="buildGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a1525"/>
+            <stop offset="100%" stop-color="#060e1a"/>
+          </linearGradient>
+        </defs>
+        <rect width="375" height="667" fill="url(#skyGrad)"/>
+        <!-- 별 -->
+        <circle cx="50" cy="40" r="1" fill="#fff" opacity="0.4"/>
+        <circle cx="120" cy="25" r="0.8" fill="#fff" opacity="0.3"/>
+        <circle cx="200" cy="50" r="1.2" fill="#fff" opacity="0.5"/>
+        <circle cx="300" cy="30" r="0.7" fill="#fff" opacity="0.3"/>
+        <circle cx="340" cy="60" r="1" fill="#fff" opacity="0.4"/>
+        <circle cx="80" cy="80" r="0.6" fill="#fff" opacity="0.2"/>
+        <!-- 도시 스카이라인 -->
+        <rect x="0" y="280" width="30" height="200" fill="url(#buildGrad)"/>
+        <rect x="28" y="240" width="25" height="240" fill="url(#buildGrad)"/>
+        <rect x="51" y="300" width="20" height="180" fill="url(#buildGrad)"/>
+        <rect x="69" y="220" width="35" height="260" fill="url(#buildGrad)"/>
+        <rect x="102" y="260" width="28" height="220" fill="url(#buildGrad)"/>
+        <rect x="128" y="200" width="40" height="280" fill="url(#buildGrad)"/>
+        <rect x="166" y="250" width="22" height="230" fill="url(#buildGrad)"/>
+        <rect x="186" y="180" width="50" height="300" fill="url(#buildGrad)"/>
+        <rect x="234" y="230" width="30" height="250" fill="url(#buildGrad)"/>
+        <rect x="262" y="210" width="45" height="270" fill="url(#buildGrad)"/>
+        <rect x="305" y="270" width="25" height="210" fill="url(#buildGrad)"/>
+        <rect x="328" y="240" width="47" height="240" fill="url(#buildGrad)"/>
+        <!-- 빌딩 창문 불빛 -->
+        <rect x="72" y="230" width="4" height="3" fill="#FFD700" opacity="0.6"/>
+        <rect x="80" y="245" width="4" height="3" fill="#FFD700" opacity="0.4"/>
+        <rect x="72" y="258" width="4" height="3" fill="#1A5CFF" opacity="0.7"/>
+        <rect x="132" y="215" width="5" height="4" fill="#FFD700" opacity="0.5"/>
+        <rect x="142" y="230" width="5" height="4" fill="#1A5CFF" opacity="0.6"/>
+        <rect x="132" y="248" width="5" height="4" fill="#FFD700" opacity="0.4"/>
+        <rect x="190" y="195" width="6" height="4" fill="#FFD700" opacity="0.6"/>
+        <rect x="200" y="210" width="6" height="4" fill="#1A5CFF" opacity="0.7"/>
+        <rect x="190" y="228" width="6" height="4" fill="#FFD700" opacity="0.4"/>
+        <rect x="266" y="222" width="5" height="4" fill="#FFD700" opacity="0.5"/>
+        <rect x="276" y="238" width="5" height="4" fill="#1A5CFF" opacity="0.6"/>
+        <rect x="266" y="255" width="5" height="4" fill="#FFD700" opacity="0.4"/>
+        <!-- 도로 반사 -->
+        <rect x="0" y="480" width="375" height="187" fill="#07101e"/>
+        <line x1="0" y1="480" x2="375" y2="480" stroke="#1A5CFF" stroke-width="0.5" opacity="0.2"/>
+        <!-- 차량 라이트 -->
+        <ellipse cx="80" cy="500" rx="20" ry="3" fill="#FFD700" opacity="0.2"/>
+        <ellipse cx="200" cy="520" rx="25" ry="3" fill="#FF4444" opacity="0.15"/>
+        <ellipse cx="300" cy="505" rx="20" ry="3" fill="#FFD700" opacity="0.2"/>
+      </svg>
+      <!-- 텍스트 오버레이 -->
+      <div class="reel-overlay">
+        <div class="ro-logo-badge">BRIIQ</div>
+        <div class="ro-date">Mar 10, 2026 · Market Analysis</div>
+        <div class="ro-title">나스닥 상승의 <em>70%</em>,<br>7개 종목이 만들었다</div>
+        <div class="ro-tag">주식 · Stock Market</div>
+        <div class="ro-body">
+          최근 나스닥 상승분의 70% 이상이 Magnificent 7에서 나왔습니다.
+          지수는 오르지만 대부분 종목은 제자리인 이유가 여기 있습니다.
+          이걸 시장 집중도라고 부릅니다.
+        </div>
+        <div class="ro-source">*출처: Bloomberg · 2026.03.10</div>
+      </div>
+      <!-- IG UI -->
+      <div class="reel-ui">
+        <div class="rui-right">
+          <div class="rui-action"><div class="rui-icon">🤍</div><div class="rui-count">2,841</div></div>
+          <div class="rui-action"><div class="rui-icon">💬</div><div class="rui-count">184</div></div>
+          <div class="rui-action"><div class="rui-icon">➤</div><div class="rui-count">632</div></div>
+          <div class="rui-action"><div class="rui-icon">🔖</div></div>
+          <div class="rui-action"><div class="rui-icon">⋯</div></div>
+        </div>
+        <div class="rui-bottom">
+          <div class="rui-userrow">
+            <div class="rui-avatar">B</div>
+            <div class="rui-name">@briiq</div>
+            <div class="rui-follow-sm">팔로우</div>
+          </div>
+          <div class="rui-caption">나스닥은 오르는데 내 주식은 왜 안 오를까? 이유가 있습니다 📊</div>
+          <div class="rui-music"><span class="rui-music-icon">♫</span><span class="rui-music-txt">BRIIQ Original · Market Insight</span></div>
+        </div>
+      </div>
+      <div class="reel-progress"><div class="reel-progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="ig-bottombar">
+    <div class="ibb-icon">🏠</div>
+    <div class="ibb-icon">🔍</div>
+    <div class="ibb-icon">＋</div>
+    <div class="ibb-icon">▶</div>
+    <div class="ibb-icon">👤</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     VIEW 2: 클립+해석
+═══════════════════════════════════ -->
+<div class="phone-shell view" id="v2">
+  <div class="statusbar" style="background:#000"><span class="sb-time" style="color:#fff">9:41</span><div class="sb-icons"><span class="sb-icon" style="color:#fff">●●●</span></div></div>
+  <div class="reel-wrap">
+    <div class="clip-reel">
+      <!-- 상단 해석 텍스트 -->
+      <div class="cr-top">
+        <div class="cr-userrow">
+          <div class="cr-avatar">B</div>
+          <div class="cr-name">@briiq · 투자고래</div>
+        </div>
+        <div class="cr-headline">시장이 잘못 짚었다.<br>AI가 커질수록<br>소프트웨어도 커진다.</div>
+      </div>
+      <!-- 클립 영역 -->
+      <div class="cr-clip">
+        <svg viewBox="0 0 375 310" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+          <defs>
+            <linearGradient id="studioGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1a2840"/>
+              <stop offset="50%" stop-color="#243550"/>
+              <stop offset="100%" stop-color="#1a2840"/>
+            </linearGradient>
+          </defs>
+          <!-- 스튜디오 배경 -->
+          <rect width="375" height="310" fill="url(#studioGrad)"/>
+          <!-- 배경 식물 -->
+          <ellipse cx="280" cy="120" rx="60" ry="80" fill="#1a3520" opacity="0.6"/>
+          <ellipse cx="320" cy="100" rx="40" ry="60" fill="#1e3a25" opacity="0.5"/>
+          <ellipse cx="250" cy="140" rx="50" ry="60" fill="#162c1e" opacity="0.7"/>
+          <!-- 인물 (젠슨 황 스타일) -->
+          <ellipse cx="165" cy="80" rx="42" ry="48" fill="#2a3545"/>
+          <rect x="90" y="125" width="150" height="185" rx="8" fill="#252f3e"/>
+          <!-- 얼굴 디테일 -->
+          <ellipse cx="150" cy="68" rx="6" ry="7" fill="#1e2838" opacity="0.5"/>
+          <ellipse cx="180" cy="68" rx="6" ry="7" fill="#1e2838" opacity="0.5"/>
+          <!-- 안경 -->
+          <rect x="143" y="65" width="14" height="9" rx="4" fill="none" stroke="#888" stroke-width="1.5"/>
+          <rect x="173" y="65" width="14" height="9" rx="4" fill="none" stroke="#888" stroke-width="1.5"/>
+          <line x1="157" y1="69" x2="173" y2="69" stroke="#888" stroke-width="1.5"/>
+          <!-- 자켓 -->
+          <path d="M90 155 L130 140 L165 170 L200 140 L240 155 L240 310 L90 310Z" fill="#1a1f2e"/>
+          <!-- VREW 워터마크 -->
+          <rect x="8" y="8" width="40" height="14" rx="2" fill="rgba(255,255,255,0.15)"/>
+          <text x="13" y="19" font-size="7" fill="#fff" font-family="Arial" font-weight="700">VREW</text>
+        </svg>
+        <div class="cr-source">*출처: CNBC</div>
+        <div class="cr-newsbar">
+          <div class="cr-nb-breaking">BREAKING NEWS</div>
+          <div class="cr-nb-text">NVIDIA Q4 DATA CENTER REVENUE $62.3B VS $60.69B ESTIMATE</div>
+        </div>
+      </div>
+      <!-- 하단 해석 -->
+      <div class="cr-bottom">
+        <div class="cr-insight">젠슨 황 발언 이후 시장은 AI 하드웨어에만 집중했습니다. 하지만 <em>소프트웨어 레이어</em>가 다음 성장 구간입니다.</div>
+      </div>
+      <!-- IG UI -->
+      <div class="reel-ui">
+        <div class="rui-right">
+          <div class="rui-action"><div class="rui-icon">🤍</div><div class="rui-count">5,219</div></div>
+          <div class="rui-action"><div class="rui-icon">💬</div><div class="rui-count">347</div></div>
+          <div class="rui-action"><div class="rui-icon">➤</div><div class="rui-count">1.2K</div></div>
+          <div class="rui-action"><div class="rui-icon">🔖</div></div>
+        </div>
+      </div>
+      <div class="reel-progress"><div class="reel-progress-fill" style="width:55%"></div></div>
+    </div>
+  </div>
+  <div class="ig-actions">
+    <div class="ia-row1">
+      <div class="ia-left">
+        <div class="ia-icon">🤍</div>
+        <div class="ia-icon">💬</div>
+        <div class="ia-icon">➤</div>
+      </div>
+      <div class="ia-icon">🔖</div>
+    </div>
+    <div class="ia-likes">5,219명이 좋아합니다</div>
+    <div style="margin-top:4px"><span class="ia-username">briiq</span> <span class="ia-caption">젠슨 황 "시장이 AI를 잘못 이해하고 있다" — 저는 동의합니다. <span class="ia-more">더 보기</span></span></div>
+    <div class="ia-comment">댓글 184개 모두 보기</div>
+    <div class="ia-time">2시간 전</div>
+  </div>
+  <div class="ig-comment-input">
+    <div class="ici-avatar"></div>
+    <div class="ici-input">댓글 추가...</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     VIEW 3: 발언 인용 (Light)
+═══════════════════════════════════ -->
+<div class="phone-shell view" id="v3">
+  <div class="statusbar"><span class="sb-time">9:41</span><div class="sb-icons"><span class="sb-icon">●●●</span></div></div>
+  <div class="ig-header">
+    <div class="igh-left">
+      <div class="igh-back">‹</div>
+      <div class="igh-info"><div class="igh-title">게시물</div><div class="igh-handle">xoxo.coin</div></div>
+    </div>
+    <div style="font-size:20px">⊙</div>
+  </div>
+  <div class="reel-wrap">
+    <div class="quote-reel">
+      <div class="qr-top"><div class="qr-brand">BRIIQ</div></div>
+      <div class="qr-title-area">
+        <div class="qr-title">비트코인 저격하는<br>찰리 멍거</div>
+      </div>
+      <div class="qr-clip">
+        <svg viewBox="0 0 375 280" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+          <defs>
+            <linearGradient id="confGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#b8c8e0"/>
+              <stop offset="50%" stop-color="#c8d8f0"/>
+              <stop offset="100%" stop-color="#a8b8d0"/>
+            </linearGradient>
+          </defs>
+          <rect width="375" height="280" fill="url(#confGrad)"/>
+          <!-- 컨퍼런스 배경 -->
+          <rect x="0" y="180" width="375" height="100" fill="#9aaac0" opacity="0.5"/>
+          <text x="280" y="220" font-size="40" fill="rgba(255,255,255,0.15)" font-family="Arial" font-weight="900">nal</text>
+          <text x="60" y="240" font-size="35" fill="rgba(255,255,255,0.1)" font-family="Arial" font-weight="900">ouri</text>
+          <!-- 마이크 스탠드 -->
+          <rect x="175" y="160" width="4" height="80" fill="#8899b0"/>
+          <ellipse cx="177" cy="155" rx="8" ry="12" fill="#6678a0"/>
+          <!-- 인물 (노인 실루엣) -->
+          <ellipse cx="177" cy="65" rx="45" ry="52" fill="#8899b0"/>
+          <rect x="110" y="114" width="134" height="166" rx="6" fill="#8090a8"/>
+          <!-- 얼굴 디테일 -->
+          <ellipse cx="162" cy="52" rx="7" ry="8" fill="#7080a0" opacity="0.6"/>
+          <ellipse cx="192" cy="52" rx="7" ry="8" fill="#7080a0" opacity="0.6"/>
+          <!-- 안경 -->
+          <rect x="154" y="48" width="16" height="10" rx="5" fill="none" stroke="#606880" stroke-width="1.5"/>
+          <rect x="184" y="48" width="16" height="10" rx="5" fill="none" stroke="#606880" stroke-width="1.5"/>
+          <line x1="170" y1="53" x2="184" y2="53" stroke="#606880" stroke-width="1.5"/>
+          <!-- 넥타이 -->
+          <path d="M165 130 L177 145 L189 130 L185 120 L169 120Z" fill="#8a2020"/>
+          <!-- 정장 -->
+          <path d="M110 140 L150 125 L177 155 L204 125 L244 140 L244 280 L110 280Z" fill="#3a3a5a"/>
+        </svg>
+        <div class="qr-caption">
+          <div class="qr-cap-name">찰리 멍거 / 전 버크셔 해서웨이 부회장</div>
+          <div class="qr-cap-quote">"내 中국에선 안 돼"라고 말했고, 쾅, 이제 중국엔 암호화폐가 없죠.</div>
+        </div>
+      </div>
+      <div class="qr-bottom">
+        <div class="qr-label">BRIIQ 해석</div>
+        <div class="qr-insight">규제가 시장을 어떻게 바꾸는지 보여주는 사례입니다. <em>정책 리스크</em>는 언제나 존재합니다.</div>
+        <div class="qr-handle">@briiq</div>
+      </div>
+    </div>
+  </div>
+  <div class="ig-actions">
+    <div class="ia-row1">
+      <div class="ia-left">
+        <div class="ia-icon">🤍</div>
+        <div class="ia-icon">💬</div>
+        <div class="ia-icon">➤</div>
+      </div>
+      <div class="ia-icon">🔖</div>
+    </div>
+    <div class="ia-likes">62명이 좋아합니다</div>
+    <div style="margin-top:4px"><span class="ia-username">briiq</span> <span class="ia-caption">찰리 멍거 "암호화폐는 쓰레기다" — 근거가 있습니다</span></div>
+    <div class="ia-comment">댓글 1개 보기</div>
+    <div class="ia-time">3일 전</div>
+  </div>
+  <div class="ig-comment-input">
+    <div class="ici-avatar"></div>
+    <div class="ici-input">댓글 추가...</div>
+  </div>
+</div>
+
+<script>
+const views = ['v0','v1','v2','v3'];
+function show(idx, btn) {
+  views.forEach((id,i) => {
+    document.getElementById(id).classList.toggle('active', i===idx);
+  });
+  document.querySelectorAll('.tgl').forEach((b,i) => b.classList.toggle('on', i===idx));
+}
+</script>
+</body>
+</html>
