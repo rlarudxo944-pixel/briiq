@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRIIQ — Layout Preview 4종</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Noto+Sans+KR:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#F2F2F2;
+  font-family:'Syne','Noto Sans KR',sans-serif;
+  padding:40px 20px 100px;
+}
+
+/* PAGE HEADER */
+.page-hdr {
+  text-align:center; margin-bottom:48px;
+}
+.ph-eye {
+  font-family:'DM Mono',monospace; font-size:9px;
+  letter-spacing:0.28em; color:#1A5CFF; text-transform:uppercase; margin-bottom:10px;
+}
+.ph-title { font-size:28px; font-weight:800; letter-spacing:-0.03em; color:#111; margin-bottom:6px; }
+.ph-title em { font-style:normal; color:#1A5CFF; }
+.ph-sub { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; color:#999; text-transform:uppercase; }
+
+/* TOGGLE */
+.toggle-wrap {
+  display:flex; justify-content:center; gap:8px; margin-bottom:40px;
+}
+.toggle-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em;
+  text-transform:uppercase; padding:10px 24px;
+  border:1px solid #DDD; background:#fff; color:#999;
+  cursor:pointer; transition:all 0.2s;
+}
+.toggle-btn.active { background:#111; color:#fff; border-color:#111; }
+
+/* SECTION LABEL */
+.sec-label {
+  font-family:'DM Mono',monospace; font-size:9px;
+  letter-spacing:0.22em; color:#999; text-transform:uppercase;
+  text-align:center; margin-bottom:16px;
+}
+
+/* PHONE ROW */
+.phone-row {
+  display:flex; gap:32px; justify-content:center;
+  flex-wrap:wrap; margin-bottom:48px;
+}
+
+.phone-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.phone-tag {
+  font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.2em;
+  text-transform:uppercase; color:#1A5CFF;
+  background:#EEF3FF; border:1px solid #C5D5FF; padding:4px 12px;
+}
+
+/* PHONE FRAME */
+.phone {
+  width:240px; height:426px;
+  border-radius:32px; overflow:hidden; position:relative;
+  border:6px solid #1A1A1A;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18), inset 0 0 0 1px #333;
+  flex-shrink:0;
+}
+.phone::before {
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:60px; height:5px; background:#1A1A1A; border-radius:0 0 8px 8px; z-index:100;
+}
+
+.phone-desc {
+  font-size:11px; color:#999; text-align:center;
+  line-height:1.6; max-width:200px;
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.05em;
+}
+
+/* =========================================
+   DARK VERSIONS
+========================================= */
+
+/* D1 — 카드뉴스 (neusral 스타일) */
+.d1 {
+  width:100%; height:100%; position:relative;
+  background:#111; overflow:hidden;
+}
+.d1-bg {
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,
+    rgba(10,15,25,0.3) 0%,
+    rgba(10,15,25,0.5) 40%,
+    rgba(10,15,25,0.92) 70%,
+    #0A0F19 100%);
+  z-index:2;
+}
+.d1-img {
+  position:absolute; inset:0;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='426'%3E%3Crect width='240' height='426' fill='%230d1520'/%3E%3Crect x='20' y='60' width='200' height='120' rx='4' fill='%23141c2a'/%3E%3Crect x='30' y='70' width='80' height='8' rx='2' fill='%231a2535'/%3E%3Crect x='30' y='85' width='140' height='6' rx='2' fill='%23161e2c'/%3E%3Crect x='30' y='97' width='100' height='6' rx='2' fill='%23161e2c'/%3E%3Cpath d='M20 190 Q60 160 100 175 Q140 188 180 155 Q210 140 240 150 L240 250 L20 250Z' fill='%230f1928'/%3E%3Cpath d='M20 200 Q70 175 110 185 Q150 195 190 165 Q215 150 240 158 L240 260 L20 260Z' fill='%231A5CFF' opacity='0.15'/%3E%3Crect x='20' y='270' width='200' height='3' rx='1' fill='%23161e2c'/%3E%3Crect x='20' y='280' width='160' height='3' rx='1' fill='%23161e2c'/%3E%3Crect x='20' y='295' width='180' height='3' rx='1' fill='%23161e2c'/%3E%3C/svg%3E");
+  background-size:cover; z-index:1;
+}
+.d1-content {
+  position:absolute; bottom:0; left:0; right:0;
+  z-index:3; padding:16px;
+}
+.d1-date {
+  font-family:'DM Mono',monospace; font-size:8px;
+  letter-spacing:0.15em; color:rgba(255,255,255,0.45);
+  text-transform:uppercase; margin-bottom:6px;
+}
+.d1-title {
+  font-size:17px; font-weight:900; color:#fff;
+  line-height:1.25; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif; margin-bottom:8px;
+}
+.d1-title em { font-style:normal; color:#4D7FFF; }
+.d1-tag {
+  display:inline-block; font-family:'DM Mono',monospace;
+  font-size:7px; letter-spacing:0.15em;
+  color:rgba(255,255,255,0.5); border:1px solid rgba(255,255,255,0.15);
+  padding:3px 8px; text-transform:uppercase; margin-bottom:8px;
+}
+.d1-body {
+  font-size:9px; color:rgba(255,255,255,0.55);
+  line-height:1.65; font-family:'Noto Sans KR',sans-serif;
+}
+.d1-logo {
+  position:absolute; top:14px; left:14px; z-index:3;
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:500;
+  color:#fff; letter-spacing:0.1em;
+  background:rgba(26,92,255,0.8); padding:3px 8px;
+}
+
+/* D2 — 클립+해석 (urbanwhale 스타일) */
+.d2 {
+  width:100%; height:100%; background:#000;
+  display:flex; flex-direction:column; position:relative;
+}
+.d2-top {
+  padding:22px 14px 10px; z-index:2; position:relative;
+}
+.d2-handle {
+  display:flex; align-items:center; gap:6px; margin-bottom:10px;
+}
+.d2-avatar {
+  width:20px; height:20px; border-radius:50%;
+  background:#1A5CFF; display:flex; align-items:center; justify-content:center;
+  font-size:8px; font-weight:800; color:#fff;
+}
+.d2-name {
+  font-family:'DM Mono',monospace; font-size:8px;
+  color:rgba(255,255,255,0.6); letter-spacing:0.1em;
+}
+.d2-headline {
+  font-size:16px; font-weight:900; color:#fff;
+  line-height:1.2; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif;
+}
+.d2-clip {
+  flex:1; position:relative; overflow:hidden;
+}
+.d2-clip-bg {
+  width:100%; height:100%;
+  background:linear-gradient(160deg, #0d1828 0%, #151f30 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.d2-person {
+  width:100px; height:130px;
+  background:linear-gradient(180deg, #1a2840 0%, #0d1520 100%);
+  border-radius:50% 50% 0 0 / 40% 40% 0 0;
+  position:relative; opacity:0.7;
+}
+.d2-person::before {
+  content:''; position:absolute; bottom:100%; left:50%;
+  transform:translateX(-50%);
+  width:48px; height:48px; border-radius:50%;
+  background:#1a2840;
+}
+.d2-newsbar {
+  position:absolute; bottom:0; left:0; right:0;
+  background:#CC0000; padding:5px 8px;
+  display:flex; align-items:center; gap:5px;
+}
+.d2-nb-tag {
+  font-family:'DM Mono',monospace; font-size:6px;
+  color:#fff; background:rgba(0,0,0,0.3); padding:1px 5px;
+  letter-spacing:0.1em; text-transform:uppercase;
+}
+.d2-nb-text {
+  font-family:'DM Mono',monospace; font-size:6px;
+  color:#fff; white-space:nowrap; overflow:hidden;
+}
+.d2-source {
+  position:absolute; top:6px; right:8px;
+  font-family:'DM Mono',monospace; font-size:6px;
+  color:rgba(255,255,255,0.3); letter-spacing:0.1em; text-transform:uppercase;
+}
+.d2-bottom {
+  padding:8px 14px 14px;
+  border-top:1px solid rgba(26,92,255,0.15);
+  background:rgba(0,0,0,0.95);
+}
+.d2-insight {
+  font-size:9px; color:#777;
+  line-height:1.55; font-family:'Noto Sans KR',sans-serif;
+}
+.d2-insight em { font-style:normal; color:#4D7FFF; }
+
+/* D3 — 발언 인용 (xoxo 스타일) */
+.d3 {
+  width:100%; height:100%; background:#000;
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+}
+.d3-logo-area {
+  padding:18px 14px 0;
+  display:flex; align-items:center; justify-content:center;
+}
+.d3-logo {
+  font-family:'DM Mono',monospace; font-size:13px; font-weight:700;
+  color:#fff; letter-spacing:0.08em; opacity:0.8;
+}
+.d3-title-area { padding:14px 14px 10px; }
+.d3-title {
+  font-size:18px; font-weight:900; color:#fff;
+  line-height:1.2; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif; text-align:center;
+}
+.d3-clip {
+  flex:1; position:relative; overflow:hidden;
+  background:linear-gradient(160deg, #0e1522 0%, #1a2035 50%, #0d1520 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.d3-person-large {
+  width:150px; height:200px;
+  background:linear-gradient(180deg, #1e2d44 0%, #111a28 100%);
+  border-radius:50% 50% 0 0 / 35% 35% 0 0;
+  position:relative; opacity:0.65;
+}
+.d3-person-large::before {
+  content:''; position:absolute; bottom:100%; left:50%;
+  transform:translateX(-50%);
+  width:70px; height:70px; border-radius:50%;
+  background:#1e2d44;
+}
+.d3-caption {
+  position:absolute; bottom:16px; left:12px; right:12px;
+  background:rgba(0,0,0,0.7); padding:6px 10px;
+  border-radius:4px;
+}
+.d3-cap-name {
+  font-size:8px; font-weight:700; color:#fff;
+  font-family:'Noto Sans KR',sans-serif; margin-bottom:3px;
+}
+.d3-cap-quote {
+  font-size:8px; color:rgba(255,255,255,0.8);
+  font-family:'Noto Sans KR',sans-serif; line-height:1.4;
+  font-style:italic;
+}
+.d3-bottom-dark {
+  background:#000; padding:10px 14px 14px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.d3-insight-dark {
+  font-size:9px; color:#555;
+  font-family:'Noto Sans KR',sans-serif; line-height:1.5;
+}
+.d3-insight-dark em { color:#4D7FFF; font-style:normal; }
+
+/* D4 — 피드 썸네일 */
+.d4 {
+  width:100%; height:100%; background:#000;
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:1px; overflow:hidden;
+}
+.d4-thumb {
+  position:relative; overflow:hidden;
+  background:#0d1020;
+  aspect-ratio:1;
+}
+.d4-thumb-bg {
+  width:100%; height:100%; display:flex; align-items:flex-end;
+  padding:5px;
+}
+.d4-thumb-txt {
+  font-size:7px; font-weight:900; color:#fff;
+  line-height:1.2; font-family:'Noto Sans KR',sans-serif;
+  text-shadow:0 1px 4px rgba(0,0,0,0.8);
+}
+.d4-thumb-tag {
+  position:absolute; top:4px; left:4px;
+  font-family:'DM Mono',monospace; font-size:5px;
+  letter-spacing:0.1em; color:#fff;
+  background:rgba(26,92,255,0.85); padding:2px 4px;
+  text-transform:uppercase;
+}
+.d4-thumb-logo {
+  position:absolute; top:4px; right:4px;
+  font-family:'DM Mono',monospace; font-size:5px;
+  color:rgba(255,255,255,0.4); letter-spacing:0.1em;
+}
+/* thumb colors */
+.t1 { background:linear-gradient(135deg,#0d1828,#152238); }
+.t2 { background:linear-gradient(135deg,#1a1020,#2a1535); }
+.t3 { background:linear-gradient(135deg,#101820,#182535); }
+.t4 { background:linear-gradient(135deg,#1a1510,#2a2015); }
+.t5 { background:linear-gradient(135deg,#0d1520,#101a2a); }
+.t6 { background:linear-gradient(135deg,#151020,#201530); }
+.t7 { background:linear-gradient(135deg,#101818,#152025); }
+.t8 { background:linear-gradient(135deg,#1a1018,#251522); }
+.t9 { background:linear-gradient(135deg,#0d1015,#121820); }
+
+/* =========================================
+   LIGHT VERSIONS
+========================================= */
+
+/* L1 — 카드뉴스 라이트 */
+.l1 {
+  width:100%; height:100%; position:relative;
+  background:#F8F6F0; overflow:hidden;
+}
+.l1-bg {
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,
+    rgba(248,246,240,0.1) 0%,
+    rgba(248,246,240,0.6) 45%,
+    #F8F6F0 68%,
+    #F8F6F0 100%);
+  z-index:2;
+}
+.l1-img {
+  position:absolute; inset:0;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='426'%3E%3Crect width='240' height='426' fill='%23e8e4da'/%3E%3Crect x='0' y='0' width='240' height='220' fill='%23ddd9ce'/%3E%3Ccircle cx='120' cy='100' r='60' fill='%23d0ccbf' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:cover; z-index:1;
+}
+.l1-content {
+  position:absolute; bottom:0; left:0; right:0;
+  z-index:3; padding:16px;
+}
+.l1-date {
+  font-family:'DM Mono',monospace; font-size:8px;
+  letter-spacing:0.15em; color:#888;
+  text-transform:uppercase; margin-bottom:6px;
+}
+.l1-title {
+  font-size:17px; font-weight:900; color:#111;
+  line-height:1.25; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif; margin-bottom:8px;
+}
+.l1-title em { font-style:normal; color:#1A5CFF; }
+.l1-tag {
+  display:inline-block; font-family:'DM Mono',monospace;
+  font-size:7px; letter-spacing:0.15em;
+  color:#888; border:1px solid #CCC;
+  padding:3px 8px; text-transform:uppercase; margin-bottom:8px;
+  background:#fff;
+}
+.l1-body {
+  font-size:9px; color:#666;
+  line-height:1.65; font-family:'Noto Sans KR',sans-serif;
+}
+.l1-logo {
+  position:absolute; top:14px; left:14px; z-index:3;
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:500;
+  color:#fff; letter-spacing:0.1em;
+  background:#1A5CFF; padding:3px 8px;
+}
+
+/* L2 — 클립+해석 라이트 */
+.l2 {
+  width:100%; height:100%; background:#F8F8F8;
+  display:flex; flex-direction:column; position:relative;
+}
+.l2-top { padding:22px 14px 10px; }
+.l2-handle { display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+.l2-avatar {
+  width:20px; height:20px; border-radius:50%;
+  background:#1A5CFF; display:flex; align-items:center; justify-content:center;
+  font-size:8px; font-weight:800; color:#fff;
+}
+.l2-name { font-family:'DM Mono',monospace; font-size:8px; color:#888; letter-spacing:0.1em; }
+.l2-headline {
+  font-size:15px; font-weight:900; color:#111;
+  line-height:1.2; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif;
+}
+.l2-clip {
+  flex:1; position:relative; overflow:hidden;
+  background:#E8EAF0;
+  display:flex; align-items:center; justify-content:center;
+}
+.l2-person {
+  width:100px; height:130px;
+  background:linear-gradient(180deg, #C8D0E0 0%, #B0BAD0 100%);
+  border-radius:50% 50% 0 0 / 40% 40% 0 0;
+  position:relative; opacity:0.6;
+}
+.l2-person::before {
+  content:''; position:absolute; bottom:100%; left:50%;
+  transform:translateX(-50%);
+  width:48px; height:48px; border-radius:50%;
+  background:#C8D0E0;
+}
+.l2-newsbar {
+  position:absolute; bottom:0; left:0; right:0;
+  background:#CC0000; padding:5px 8px;
+  display:flex; align-items:center; gap:5px;
+}
+.l2-nb-tag {
+  font-family:'DM Mono',monospace; font-size:6px;
+  color:#fff; background:rgba(0,0,0,0.3); padding:1px 5px;
+  letter-spacing:0.1em; text-transform:uppercase;
+}
+.l2-nb-text { font-family:'DM Mono',monospace; font-size:6px; color:#fff; }
+.l2-source {
+  position:absolute; top:6px; right:8px;
+  font-family:'DM Mono',monospace; font-size:6px;
+  color:rgba(0,0,0,0.3); letter-spacing:0.1em; text-transform:uppercase;
+}
+.l2-bottom {
+  padding:8px 14px 14px;
+  border-top:1px solid #E5E5E5; background:#fff;
+}
+.l2-insight { font-size:9px; color:#777; line-height:1.55; font-family:'Noto Sans KR',sans-serif; }
+.l2-insight em { font-style:normal; color:#1A5CFF; font-weight:600; }
+
+/* L3 — 발언 인용 라이트 */
+.l3 {
+  width:100%; height:100%; background:#fff;
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+}
+.l3-logo-area { padding:18px 14px 0; display:flex; align-items:center; justify-content:center; }
+.l3-logo { font-family:'DM Mono',monospace; font-size:13px; font-weight:700; color:#111; letter-spacing:0.08em; }
+.l3-title-area { padding:14px 14px 10px; }
+.l3-title {
+  font-size:18px; font-weight:900; color:#111;
+  line-height:1.2; letter-spacing:-0.02em;
+  font-family:'Noto Sans KR',sans-serif; text-align:center;
+}
+.l3-clip {
+  flex:1; position:relative; overflow:hidden;
+  background:#E8EBF2;
+  display:flex; align-items:center; justify-content:center;
+}
+.l3-person-large {
+  width:150px; height:200px;
+  background:linear-gradient(180deg, #C0CCD8 0%, #A8B8C8 100%);
+  border-radius:50% 50% 0 0 / 35% 35% 0 0;
+  position:relative; opacity:0.6;
+}
+.l3-person-large::before {
+  content:''; position:absolute; bottom:100%; left:50%;
+  transform:translateX(-50%);
+  width:70px; height:70px; border-radius:50%; background:#C0CCD8;
+}
+.l3-caption {
+  position:absolute; bottom:16px; left:12px; right:12px;
+  background:rgba(255,255,255,0.9); padding:6px 10px;
+  border-radius:4px; border:1px solid #E0E0E0;
+}
+.l3-cap-name { font-size:8px; font-weight:700; color:#111; font-family:'Noto Sans KR',sans-serif; margin-bottom:3px; }
+.l3-cap-quote { font-size:8px; color:#555; font-family:'Noto Sans KR',sans-serif; line-height:1.4; font-style:italic; }
+.l3-bottom-light {
+  background:#F8F8F8; padding:10px 14px 14px;
+  border-top:1px solid #E5E5E5;
+}
+.l3-insight-light { font-size:9px; color:#777; font-family:'Noto Sans KR',sans-serif; line-height:1.5; }
+.l3-insight-light em { color:#1A5CFF; font-style:normal; font-weight:600; }
+
+/* L4 — 피드 썸네일 라이트 */
+.l4 {
+  width:100%; height:100%; background:#F0F0F0;
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:1px; overflow:hidden;
+}
+.l4-thumb { position:relative; overflow:hidden; aspect-ratio:1; }
+.l4-thumb-bg { width:100%; height:100%; display:flex; align-items:flex-end; padding:5px; }
+.l4-thumb-txt { font-size:7px; font-weight:900; color:#111; line-height:1.2; font-family:'Noto Sans KR',sans-serif; }
+.l4-thumb-tag {
+  position:absolute; top:4px; left:4px;
+  font-family:'DM Mono',monospace; font-size:5px;
+  letter-spacing:0.1em; color:#fff;
+  background:#1A5CFF; padding:2px 4px; text-transform:uppercase;
+}
+.l4-thumb-logo {
+  position:absolute; top:4px; right:4px;
+  font-family:'DM Mono',monospace; font-size:5px;
+  color:rgba(0,0,0,0.3); letter-spacing:0.08em;
+}
+.lt1 { background:#E8EDF5; }
+.lt2 { background:#EDE8F5; }
+.lt3 { background:#E8F0F5; }
+.lt4 { background:#F5F0E8; }
+.lt5 { background:#E8EDF5; }
+.lt6 { background:#F0E8F5; }
+.lt7 { background:#E8F5F0; }
+.lt8 { background:#F5E8EC; }
+.lt9 { background:#EEF0F5; }
+
+/* DIVIDER */
+.divider {
+  border:none; border-top:1px solid #DDD;
+  margin:40px 0;
+}
+
+/* VERSION LABEL */
+.version-label {
+  text-align:center; margin-bottom:24px;
+}
+.vl-badge {
+  display:inline-block;
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em;
+  text-transform:uppercase; padding:6px 20px;
+  border:1px solid #DDD;
+}
+.vl-dark { background:#111; color:#fff; border-color:#111; }
+.vl-light { background:#fff; color:#333; border-color:#DDD; }
+
+/* HIDDEN */
+.dark-row, .light-row { display:flex; }
+body.show-light .dark-row { display:none; }
+body.show-dark .light-row { display:none; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.phone-wrap { animation:fadeUp 0.4s ease both; }
+.phone-wrap:nth-child(1){animation-delay:0.05s}
+.phone-wrap:nth-child(2){animation-delay:0.1s}
+.phone-wrap:nth-child(3){animation-delay:0.15s}
+.phone-wrap:nth-child(4){animation-delay:0.2s}
+</style>
+</head>
+<body class="show-dark" id="body">
+
+<div class="page-hdr">
+  <div class="ph-eye">BRIIQ · Layout Preview · 4종 2버전</div>
+  <div class="ph-title">콘텐츠 <em>레이아웃</em></div>
+  <div class="ph-sub">카드뉴스 · 클립해석 · 발언인용 · 피드썸네일</div>
+</div>
+
+<!-- TOGGLE -->
+<div class="toggle-wrap">
+  <button class="toggle-btn active" id="btn-dark" onclick="setMode('dark')">◼ Dark</button>
+  <button class="toggle-btn" id="btn-light" onclick="setMode('light')">◻ Light</button>
+  <button class="toggle-btn" id="btn-both" onclick="setMode('both')">◈ Both</button>
+</div>
+
+<!-- ── DARK ROW ── -->
+<div class="dark-row phone-row" id="dark-row">
+
+  <!-- D1 카드뉴스 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">① 카드뉴스</div>
+    <div class="phone">
+      <div class="d1">
+        <div class="d1-img"></div>
+        <div class="d1-bg"></div>
+        <div class="d1-logo">BRIIQ</div>
+        <div class="d1-content">
+          <div class="d1-date">Mar 10, 2026 · 1 min read</div>
+          <div class="d1-title">나스닥 상승의 <em>70%</em>,<br>7개 종목이 만들었다</div>
+          <div class="d1-tag">주식/Stock Market</div>
+          <div class="d1-body">
+            최근 나스닥 상승분의 70% 이상이<br>
+            Magnificent 7에서 나왔습니다.<br>
+            지수와 체감이 다른 이유입니다.<br>
+            <span style="color:#4D7FFF">*출처: Bloomberg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">배경사진 + 텍스트<br>neusral 스타일</div>
+  </div>
+
+  <!-- D2 클립+해석 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">② 클립+해석</div>
+    <div class="phone">
+      <div class="d2">
+        <div class="d2-top">
+          <div class="d2-handle">
+            <div class="d2-avatar">B</div>
+            <div class="d2-name">@briiq</div>
+          </div>
+          <div class="d2-headline">시장이 잘못 짚었다.<br>AI가 커질수록<br>소프트웨어도 커진다.</div>
+        </div>
+        <div class="d2-clip">
+          <div class="d2-clip-bg">
+            <div class="d2-person"></div>
+            <div class="d2-source">*출처: CNBC</div>
+            <div class="d2-newsbar">
+              <div class="d2-nb-tag">Breaking</div>
+              <div class="d2-nb-text">NVIDIA Q4 DATA CENTER $62.3B</div>
+            </div>
+          </div>
+        </div>
+        <div class="d2-bottom">
+          <div class="d2-insight">
+            젠슨 황 발언 이후 시장은 하드웨어에만 집중했습니다. 하지만 <em>소프트웨어 레이어</em>가 다음 성장 구간입니다.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">클립 위 해석 텍스트<br>urbanwhale 스타일</div>
+  </div>
+
+  <!-- D3 발언인용 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">③ 발언 인용</div>
+    <div class="phone">
+      <div class="d3">
+        <div class="d3-logo-area"><div class="d3-logo">BRIIQ</div></div>
+        <div class="d3-title-area">
+          <div class="d3-title">비트코인 저격하는<br>찰리 멍거</div>
+        </div>
+        <div class="d3-clip">
+          <div class="d3-person-large"></div>
+          <div class="d3-caption">
+            <div class="d3-cap-name">찰리 멍거 / 전 버크셔 해서웨이 부회장</div>
+            <div class="d3-cap-quote">"암호화폐는 쓰레기다"</div>
+          </div>
+        </div>
+        <div class="d3-bottom-dark">
+          <div class="d3-insight-dark">이 발언이 나온 맥락과 <em>시장 반응</em>을 해석합니다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">발언 클립 + 인용<br>xoxo.coin 스타일</div>
+  </div>
+
+  <!-- D4 피드썸네일 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">④ 피드 썸네일</div>
+    <div class="phone">
+      <div class="d4">
+        <div class="d4-thumb t1"><div class="d4-thumb-bg"><div class="d4-thumb-txt">트럼프<br>살리기법</div></div><div class="d4-thumb-tag">NEWS</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t2"><div class="d4-thumb-bg"><div class="d4-thumb-txt">머스크<br>주가조작</div></div><div class="d4-thumb-tag">CRYPTO</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t3"><div class="d4-thumb-bg"><div class="d4-thumb-txt">비트코인<br>1000884개</div></div><div class="d4-thumb-tag">CRYPTO</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t4"><div class="d4-thumb-bg"><div class="d4-thumb-txt">머스크<br>카르다노</div></div><div class="d4-thumb-tag">NEWS</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t5"><div class="d4-thumb-bg"><div class="d4-thumb-txt">찰리멍거<br>비트코인</div></div><div class="d4-thumb-tag">CRYPTO</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t6"><div class="d4-thumb-bg"><div class="d4-thumb-txt">외국인<br>매도중</div></div><div class="d4-thumb-tag">NEWS</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t7"><div class="d4-thumb-bg"><div class="d4-thumb-txt">나스닥<br>70%</div></div><div class="d4-thumb-tag">NEWS</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t8"><div class="d4-thumb-bg"><div class="d4-thumb-txt">ETF<br>자금유입</div></div><div class="d4-thumb-tag">CRYPTO</div><div class="d4-thumb-logo">BRIIQ</div></div>
+        <div class="d4-thumb t9"><div class="d4-thumb-bg"><div class="d4-thumb-txt">시장<br>유동성</div></div><div class="d4-thumb-tag">NEWS</div><div class="d4-thumb-logo">BRIIQ</div></div>
+      </div>
+    </div>
+    <div class="phone-desc">인스타 피드 그리드뷰<br>xoxo.coin 피드 스타일</div>
+  </div>
+
+</div>
+
+<!-- ── LIGHT ROW ── -->
+<div class="light-row phone-row" id="light-row" style="display:none">
+
+  <!-- L1 카드뉴스 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">① 카드뉴스</div>
+    <div class="phone">
+      <div class="l1">
+        <div class="l1-img"></div>
+        <div class="l1-bg"></div>
+        <div class="l1-logo">BRIIQ</div>
+        <div class="l1-content">
+          <div class="l1-date">Mar 10, 2026 · 1 min read</div>
+          <div class="l1-title">나스닥 상승의 <em>70%</em>,<br>7개 종목이 만들었다</div>
+          <div class="l1-tag">주식/Stock Market</div>
+          <div class="l1-body">
+            최근 나스닥 상승분의 70% 이상이<br>
+            Magnificent 7에서 나왔습니다.<br>
+            지수와 체감이 다른 이유입니다.<br>
+            <span style="color:#1A5CFF">*출처: Bloomberg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">배경사진 + 텍스트<br>neusral 스타일 (라이트)</div>
+  </div>
+
+  <!-- L2 클립+해석 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">② 클립+해석</div>
+    <div class="phone">
+      <div class="l2">
+        <div class="l2-top">
+          <div class="l2-handle">
+            <div class="l2-avatar">B</div>
+            <div class="l2-name">@briiq</div>
+          </div>
+          <div class="l2-headline">시장이 잘못 짚었다.<br>AI가 커질수록<br>소프트웨어도 커진다.</div>
+        </div>
+        <div class="l2-clip">
+          <div class="l2-person"></div>
+          <div class="l2-source">*출처: CNBC</div>
+          <div class="l2-newsbar">
+            <div class="l2-nb-tag">Breaking</div>
+            <div class="l2-nb-text">NVIDIA Q4 DATA CENTER $62.3B</div>
+          </div>
+        </div>
+        <div class="l2-bottom">
+          <div class="l2-insight">젠슨 황 발언 이후 시장은 하드웨어에만 집중했습니다. 하지만 <em>소프트웨어 레이어</em>가 다음 성장 구간입니다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">클립 위 해석 텍스트<br>urbanwhale 스타일 (라이트)</div>
+  </div>
+
+  <!-- L3 발언인용 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">③ 발언 인용</div>
+    <div class="phone">
+      <div class="l3">
+        <div class="l3-logo-area"><div class="l3-logo">BRIIQ</div></div>
+        <div class="l3-title-area">
+          <div class="l3-title">비트코인 저격하는<br>찰리 멍거</div>
+        </div>
+        <div class="l3-clip">
+          <div class="l3-person-large"></div>
+          <div class="l3-caption">
+            <div class="l3-cap-name">찰리 멍거 / 전 버크셔 해서웨이 부회장</div>
+            <div class="l3-cap-quote">"암호화폐는 쓰레기다"</div>
+          </div>
+        </div>
+        <div class="l3-bottom-light">
+          <div class="l3-insight-light">이 발언이 나온 맥락과 <em>시장 반응</em>을 해석합니다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-desc">발언 클립 + 인용<br>xoxo.coin 스타일 (라이트)</div>
+  </div>
+
+  <!-- L4 피드썸네일 -->
+  <div class="phone-wrap">
+    <div class="phone-tag">④ 피드 썸네일</div>
+    <div class="phone">
+      <div class="l4">
+        <div class="l4-thumb lt1"><div class="l4-thumb-bg"><div class="l4-thumb-txt">트럼프<br>살리기법</div></div><div class="l4-thumb-tag">NEWS</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt2"><div class="l4-thumb-bg"><div class="l4-thumb-txt">머스크<br>주가조작</div></div><div class="l4-thumb-tag">CRYPTO</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt3"><div class="l4-thumb-bg"><div class="l4-thumb-txt">비트코인<br>1000884개</div></div><div class="l4-thumb-tag">CRYPTO</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt4"><div class="l4-thumb-bg"><div class="l4-thumb-txt">머스크<br>카르다노</div></div><div class="l4-thumb-tag">NEWS</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt5"><div class="l4-thumb-bg"><div class="l4-thumb-txt">찰리멍거<br>비트코인</div></div><div class="l4-thumb-tag">CRYPTO</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt6"><div class="l4-thumb-bg"><div class="l4-thumb-txt">외국인<br>매도중</div></div><div class="l4-thumb-tag">NEWS</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt7"><div class="l4-thumb-bg"><div class="l4-thumb-txt">나스닥<br>70%</div></div><div class="l4-thumb-tag">NEWS</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt8"><div class="l4-thumb-bg"><div class="l4-thumb-txt">ETF<br>자금유입</div></div><div class="l4-thumb-tag">CRYPTO</div><div class="l4-thumb-logo">BRIIQ</div></div>
+        <div class="l4-thumb lt9"><div class="l4-thumb-bg"><div class="l4-thumb-txt">시장<br>유동성</div></div><div class="l4-thumb-tag">NEWS</div><div class="l4-thumb-logo">BRIIQ</div></div>
+      </div>
+    </div>
+    <div class="phone-desc">인스타 피드 그리드뷰<br>xoxo.coin 피드 스타일 (라이트)</div>
+  </div>
+
+</div>
+
+<script>
+function setMode(mode) {
+  const darkRow = document.getElementById('dark-row');
+  const lightRow = document.getElementById('light-row');
+  const btnDark = document.getElementById('btn-dark');
+  const btnLight = document.getElementById('btn-light');
+  const btnBoth = document.getElementById('btn-both');
+  [btnDark,btnLight,btnBoth].forEach(b=>b.classList.remove('active'));
+  if (mode==='dark') {
+    darkRow.style.display='flex'; lightRow.style.display='none';
+    btnDark.classList.add('active');
+  } else if (mode==='light') {
+    darkRow.style.display='none'; lightRow.style.display='flex';
+    btnLight.classList.add('active');
+  } else {
+    darkRow.style.display='flex'; lightRow.style.display='flex';
+    btnBoth.classList.add('active');
+  }
+}
+</script>
+</body>
+</html>
